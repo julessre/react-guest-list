@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 
 export default function AddingGuest() {
-  // const initialGuest = [];
+  const [guestList, setGuestList] = useState('');
+  const [inputFirstName, setInputFirstName] = useState('');
+  const [inputLastName, setInputLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [submittedFirstName, setSubmittedFirstName] = useState('');
-  const [submittedLastName, setSubmittedLastName] = useState('');
+  const [isAttending, setIsAttending] = useState(false);
 
   function handleSubmit(event) {
     if (event.key === 'Enter') {
-      console.log('Form submitted:', { firstName, lastName });
+      const newUser = {
+        firstName: inputFirstName,
+        lastName: inputLastName,
+        isAttending: false,
+      };
+      console.log('Form submitted:', {
+        firstName: inputFirstName,
+        lastName: inputLastName,
+        isAttending,
+      });
 
-      setSubmittedFirstName(firstName);
-      setSubmittedLastName(lastName);
+      setFirstName(inputFirstName);
+      setLastName(inputLastName);
 
-      setFirstName('');
-      setLastName('');
+      setGuestList([...guestList, newUser]);
+
+      setInputFirstName('');
+      setInputLastName('');
     }
   }
 
@@ -30,8 +42,8 @@ export default function AddingGuest() {
             <input
               name="firstname"
               placeholder="Enter your first name"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
+              value={inputFirstName}
+              onChange={(event) => setInputFirstName(event.target.value)}
             />
           </label>
         </div>
@@ -42,8 +54,8 @@ export default function AddingGuest() {
             <input
               name="lastname"
               placeholder="Enter your last name"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
+              value={inputLastName}
+              onChange={(event) => setInputLastName(event.target.value)}
               onKeyDown={handleSubmit}
             />
           </label>

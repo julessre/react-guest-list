@@ -36,6 +36,16 @@ export default function AddingGuest() {
     }
   }
 
+  function toggleAttending(userID) {
+    setGuestList((prevList) =>
+      prevList.map((user) =>
+        user.userID === userID
+          ? { ...user, isAttending: !user.isAttending }
+          : user,
+      ),
+    );
+  }
+
   return (
     <div>
       <form>
@@ -67,22 +77,21 @@ export default function AddingGuest() {
       </form>
       <h2>Registered Guests</h2>
       {guestList.map((user) => (
-        <div key={`user-${user.userID}`}>
+        <div key={`user-${user.userID}`} data-test-id="guest">
           <div>
             First Name: {user.firstName}
             <br />
             Last Name: {user.lastName}
             <br />
-            Attendance: {JSON.stringify(isAttending)}
+            Attendance: {JSON.stringify(user.isAttending)}
             <br />
-            <label>
+            <label key={`user-${user.userID}`}>
               Attending:
               <input
                 type="checkbox"
-                checked={isAttending}
-                onChange={(event) =>
-                  setIsAttending(event.currentTarget.checked)
-                }
+                checked={user.isAttending}
+                value={`user-${user.userID}`}
+                onChange={() => toggleAttending(user.userID)}
               />
             </label>
             <br />

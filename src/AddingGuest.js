@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function AddingGuest() {
   const [guestList, setGuestList] = useState([]);
@@ -8,6 +8,10 @@ export default function AddingGuest() {
   const [lastName, setLastName] = useState('');
   const [isAttending, setIsAttending] = useState(false);
   const [userID, setUserID] = useState(1);
+
+  useEffect(() => {
+    console.log('Updated Guest List:', guestList);
+  }, [guestList]);
 
   // Pressing Enter in Last Name submits the form
   function handleSubmit(event) {
@@ -21,14 +25,6 @@ export default function AddingGuest() {
       setGuestList([...guestList, newUser]);
 
       setUserID(userID + 1);
-
-      console.log('Form submitted:', {
-        firstName: inputFirstName,
-        lastName: inputLastName,
-        isAttending,
-        guestList,
-        userID,
-      });
 
       // saves Values to different variables
       setFirstName(inputFirstName);
@@ -71,20 +67,30 @@ export default function AddingGuest() {
       </form>
       <h2>Registered Guests</h2>
       {guestList.map((user) => (
-        <div key={user.userID}>
+        <div key={`user-${user.userID}`}>
           <div>
             First Name: {user.firstName}
             <br />
             Last Name: {user.lastName}
             <br />
-            Attendance: {user.isAttending ? 'Yes' : 'No'}
+            Attendance: {JSON.stringify(isAttending)}
+            <br />
+            <label>
+              Attending:
+              <input
+                type="checkbox"
+                checked={isAttending}
+                onChange={(event) =>
+                  setIsAttending(event.currentTarget.checked)
+                }
+              />
+            </label>
             <br />
             User ID: {user.userID}
           </div>
           <hr />
         </div>
       ))}
-      ;
     </div>
   );
 }

@@ -36,10 +36,10 @@ export default function AddingGuest() {
     }
   }
 
-  function toggleAttending(userID) {
+  function toggleAttending(userIDAttending) {
     setGuestList((prevList) =>
       prevList.map((user) =>
-        user.userID === userID
+        user.userID === userIDAttending
           ? { ...user, isAttending: !user.isAttending }
           : user,
       ),
@@ -91,6 +91,7 @@ export default function AddingGuest() {
                 type="checkbox"
                 checked={user.isAttending}
                 value={`user-${user.userID}`}
+                aria-label={`${firstName}${lastName} is ${isAttending}`}
                 onChange={() => toggleAttending(user.userID)}
               />
             </label>

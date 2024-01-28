@@ -2,6 +2,32 @@ body {
   background-color: #9a9e66;
 }
 
+@media (max-width: 600px) {
+  body {
+    background-color: #fff0be;
+    margin: 10px;
+    padding: 0px;
+  }
+
+  h1,
+  h2 {
+    margin: 0px;
+    padding: 0px;
+    font-size: 6vw;
+  }
+  .container {
+    padding: 5px;
+    margin: 10px;
+    width: 100%;
+  }
+
+  .output {
+    margin: auto;
+    padding: auto;
+    width: 100%;
+  }
+}
+
 h1,
 h2 {
   color: #e2a1ae;
@@ -20,7 +46,7 @@ h2 {
   background-color: #fff0be;
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   row-gap: 10px;
   margin: 50px auto;
@@ -30,9 +56,9 @@ h2 {
 }
 
 .output {
-  justify-content: left;
+  justify-content: center;
   padding: 0;
-  margin: 20px;
+  margin: 20px auto;
 }
 
 .loading {

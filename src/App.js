@@ -3,11 +3,9 @@ import React, { useEffect, useState } from 'react';
 
 export default function AddingGuest() {
   const [guestList, setGuestList] = useState([]);
-  const [inputFirstName, setInputFirstName] = useState('');
-  const [inputLastName, setInputLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [isAttending, setIsAttending] = useState(false);
+  const [attending, setAttending] = useState(false);
   const baseUrl = 'http://localhost:4000';
 
   useEffect(() => {
@@ -20,16 +18,8 @@ export default function AddingGuest() {
       console.log(error);
     });
   }, []);
-  //   console.log('Updated Guest List:', guestList);
-
-  // }, [guestList];
 
   async function createGuest() {
-    // const newUser = {
-    //   firstName: inputFirstName,
-    //   lastName: inputLastName,
-    //   isAttending: false,
-    // };
     const response = await fetch(`${baseUrl}/guests`, {
       method: 'POST',
       headers: {
@@ -41,35 +31,29 @@ export default function AddingGuest() {
     const newGuests = [...guestList];
     newGuests.push(addedGuest);
     setGuestList(newGuests);
-
-    // saves Values to different variables
-    // setFirstName(inputFirstName);
-    // setLastName(inputLastName);
-
-    // Clears input field after enter
-    setInputFirstName('');
-    setInputLastName('');
   }
 
-  // Pressing Enter in Last Name submits the form
-  // function handleSubmit(event) {
-  //   if (event.key === 'Enter') {
-  //     createGuest().catch((error) => {
-  //       console.log(error);
-  //     });
-  //   }
-  // }
-
   // Sets attending to false/true for only one user
-  function toggleAttending(userIDToggle) {
+  async function toggleAttending(id) {
+    const response = await fetch(`${baseUrl}/guests/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ attending }),
+    });
+    const updatedGuest = await response.json();
+
     setGuestList((prevList) =>
       prevList.map((user) =>
-        user.id === userIDToggle
-          ? { ...user, isAttending: !user.isAttending }
+        user.id === updatedGuest.id
+          ? { ...user, attending: !user.attending }
           : user,
       ),
     );
+    setAttending(!updatedGuest.attending);
   }
+
   // deletes only one user after click on remove
   async function cancelGuest(id) {
     const response = await fetch(`${baseUrl}/guests/${id}`, {
@@ -131,20 +115,19 @@ export default function AddingGuest() {
               <br />
               Last Name: {user.lastName}
               <br />
-              Attendance: {JSON.stringify(user.isAttending)}
+              Attendance: {JSON.stringify(user.attending)}
               <br />
               <label key={`user-${user.id}`}>
                 Attending:
                 <input
                   type="checkbox"
-                  checked={user.isAttending}
+                  checked={user.attending}
                   value={`user-${user.id}`}
-                  aria-label={`${firstName}${lastName} is ${isAttending}`}
+                  aria-label={`${firstName}${lastName} is ${attending}`}
                   onChange={() => toggleAttending(user.id)}
                 />
               </label>
               <br />
-              User ID: {user.id}
             </div>
             <button
               type="button"

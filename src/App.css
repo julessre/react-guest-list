@@ -38,9 +38,14 @@ h2 {
 button {
   background-color: #e2a1ae;
   border-radius: 8px;
-  border-color: #e2a1ae;
-  border-style: none;
+  border: 2px solid #e2a1ae;
   padding: 7px;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+button:hover {
+  border: 2px solid #e2a1ae;
+  color: black;
+  background-color: white;
 }

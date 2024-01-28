@@ -8,18 +8,14 @@ export default function AddingGuest() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [isAttending, setIsAttending] = useState(false);
-  const [userID, setUserID] = useState(1);
   const baseUrl = 'http://localhost:4000';
 
-  //like victor says, comparing it with the docs line by line, character by character can help
-  // maybe the baseUrl is not complete? I don’t know
-
   useEffect(() => {
-    const getGuests = async () => {
+    async function getGuests() {
       const response = await fetch(`${baseUrl}/guests`);
       const allGuests = await response.json();
       setGuestList(allGuests);
-    };
+    }
     getGuests().catch((error) => {
       console.log(error);
     });
@@ -28,30 +24,12 @@ export default function AddingGuest() {
 
   // }, [guestList];
 
-  // Pressing Enter in Last Name submits the form
-  function handleSubmit(event) {
-    if (event.key === 'Enter') {
-      const newUser = {
-        firstName: inputFirstName,
-        lastName: inputLastName,
-        isAttending: false,
-        userID: userID,
-      };
-      setGuestList([...guestList, newUser]);
-
-      setUserID(userID + 1);
-
-      // saves Values to different variables
-      setFirstName(inputFirstName);
-      setLastName(inputLastName);
-
-      // Clears input field after enter
-      setInputFirstName('');
-      setInputLastName('');
-    }
-  }
-
   async function createGuest() {
+    // const newUser = {
+    //   firstName: inputFirstName,
+    //   lastName: inputLastName,
+    //   isAttending: false,
+    // };
     const response = await fetch(`${baseUrl}/guests`, {
       method: 'POST',
       headers: {
@@ -59,25 +37,48 @@ export default function AddingGuest() {
       },
       body: JSON.stringify({ firstName: firstName, lastName: lastName }),
     });
-    const createdGuest = await response.json();
+    const addedGuest = await response.json();
     const newGuests = [...guestList];
-    newGuests.push(createdGuest);
+    newGuests.push(addedGuest);
     setGuestList(newGuests);
+
+    // saves Values to different variables
+    // setFirstName(inputFirstName);
+    // setLastName(inputLastName);
+
+    // Clears input field after enter
+    setInputFirstName('');
+    setInputLastName('');
   }
+
+  // Pressing Enter in Last Name submits the form
+  // function handleSubmit(event) {
+  //   if (event.key === 'Enter') {
+  //     createGuest().catch((error) => {
+  //       console.log(error);
+  //     });
+  //   }
+  // }
 
   // Sets attending to false/true for only one user
   function toggleAttending(userIDToggle) {
     setGuestList((prevList) =>
       prevList.map((user) =>
-        user.userID === userIDToggle
+        user.id === userIDToggle
           ? { ...user, isAttending: !user.isAttending }
           : user,
       ),
     );
   }
   // deletes only one user after click on remove
-  function handleRemove(userID) {
-    const newGuestList = guestList.filter((user) => user.userID !== userID);
+  async function cancelGuest(id) {
+    const response = await fetch(`${baseUrl}/guests/${id}`, {
+      method: 'DELETE',
+    });
+    const deletedGuest = await response.json();
+    const newGuestList = guestList.filter(
+      (user) => user.id !== deletedGuest.id,
+    );
     setGuestList(newGuestList);
   }
 
@@ -93,8 +94,8 @@ export default function AddingGuest() {
               name="firstname"
               placeholder="Enter your first name"
               className="Inputfields"
-              value={inputFirstName}
-              onChange={(event) => setInputFirstName(event.target.value)}
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
             />
           </label>
         </div>
@@ -106,9 +107,17 @@ export default function AddingGuest() {
               name="lastname"
               placeholder="Enter your last name"
               className="Inputfields"
-              value={inputLastName}
-              onChange={(event) => setInputLastName(event.target.value)}
-              onKeyDown={handleSubmit}
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  setFirstName('');
+                  setLastName('');
+                  createGuest().catch((error) => {
+                    console.log(error);
+                  });
+                }
+              }}
             />
           </label>
         </div>
@@ -116,11 +125,7 @@ export default function AddingGuest() {
       <div className="Guests">
         <h2>Registered Guests</h2>
         {guestList.map((user) => (
-          <div
-            key={`user-${user.userID}`}
-            data-test-id="guest"
-            className="output"
-          >
+          <div key={`user-${user.id}`} data-test-id="guest" className="output">
             <div>
               First Name: {user.firstName}
               <br />
@@ -128,23 +133,27 @@ export default function AddingGuest() {
               <br />
               Attendance: {JSON.stringify(user.isAttending)}
               <br />
-              <label key={`user-${user.userID}`}>
+              <label key={`user-${user.id}`}>
                 Attending:
                 <input
                   type="checkbox"
                   checked={user.isAttending}
-                  value={`user-${user.userID}`}
+                  value={`user-${user.id}`}
                   aria-label={`${firstName}${lastName} is ${isAttending}`}
-                  onChange={() => toggleAttending(user.userID)}
+                  onChange={() => toggleAttending(user.id)}
                 />
               </label>
               <br />
-              User ID: {user.userID}
+              User ID: {user.id}
             </div>
             <button
               type="button"
               aria-label={`Remove ${firstName}${lastName}`}
-              onClick={() => handleRemove(user.userID)}
+              onClick={() => {
+                cancelGuest(user.id).catch((error) => {
+                  console.log(error);
+                });
+              }}
             >
               Remove
             </button>

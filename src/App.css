@@ -35,6 +35,15 @@ h2 {
   margin: 20px;
 }
 
+.loading {
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  display: flex;
+  margin-top: 100px;
+}
+
 button {
   background-color: #e2a1ae;
   border-radius: 8px;

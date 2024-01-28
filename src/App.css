@@ -1,0 +1,49 @@
+body {
+  background-color: #9a9e66;
+}
+
+h1,
+h2 {
+  color: #e2a1ae;
+  text-align: center;
+}
+
+.Inputfields {
+  border: 2px solid #9a9e66;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+checkbox {
+}
+
+.container {
+  background-color: #fff0be;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+  row-gap: 10px;
+  margin: 50px auto;
+  padding: 20px;
+  width: 30%;
+  border-radius: 60px;
+}
+
+.output {
+  justify-content: left;
+  padding: 0;
+  margin: 20px;
+}
+
+button {
+  background-color: #e2a1ae;
+  border-radius: 8px;
+  border-color: #e2a1ae;
+  border-style: none;
+  padding: 7px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

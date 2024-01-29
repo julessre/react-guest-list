@@ -7,7 +7,8 @@ export default function AddingGuest() {
   const [lastName, setLastName] = useState('');
   const [attending, setAttending] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const baseUrl = 'http://localhost:4000';
+  const baseUrl =
+    'http://14ac70e1-c69e-4cbb-b11f-b7677567d1c1-00-lxz0ae3q0o09.picard.replit.dev';
 
   useEffect(() => {
     async function getGuests() {
@@ -21,6 +22,7 @@ export default function AddingGuest() {
     });
   }, []);
 
+  // Creating a new guest and adding it to the API
   async function createGuest() {
     const response = await fetch(`${baseUrl}/guests`, {
       method: 'POST',

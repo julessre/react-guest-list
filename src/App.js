@@ -74,7 +74,7 @@ export default function AddingGuest() {
     return <div className="loading">Loading...</div>;
   } else {
     return (
-      <div className="container" data-test-id="guest">
+      <div className="container">
         <h1>React Guest List</h1>
         <form>
           <div>

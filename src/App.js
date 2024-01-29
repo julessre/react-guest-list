@@ -134,7 +134,7 @@ export default function AddingGuest() {
                     type="checkbox"
                     checked={user.attending}
                     value={`user-${user.id}`}
-                    aria-label={`${firstName}${lastName} is ${attending}`}
+                    aria-label={`${user.firstName}${user.lastName} is ${user.attending}`}
                     onChange={() => toggleAttending(user.id)}
                   />
                 </label>
@@ -142,7 +142,7 @@ export default function AddingGuest() {
               </div>
               <button
                 type="button"
-                aria-label={`Remove ${firstName}${lastName}`}
+                aria-label={`Remove ${user.firstName}${user.lastName}`}
                 onClick={() => {
                   cancelGuest(user.id).catch((error) => {
                     console.log(error);

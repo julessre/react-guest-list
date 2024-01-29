@@ -133,7 +133,6 @@ export default function AddingGuest() {
                   <input
                     type="checkbox"
                     checked={user.attending}
-                    value={`user-${user.id}`}
                     aria-label={`${user.firstName} ${user.lastName} attending status`}
                     onChange={() => toggleAttending(user.id)}
                   />

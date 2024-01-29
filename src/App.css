@@ -8,7 +8,7 @@
   h1,
   h2 {
     margin: 0px;
-    padding: 20px;
+    padding: 10px;
     font-size: 6vw;
     color: #e2a1ae;
     text-align: center;
@@ -30,7 +30,7 @@
 
   .output {
     margin: auto;
-    padding: auto;
+    padding: 30px;
     width: 100%;
     justify-content: center;
     align-items: center;

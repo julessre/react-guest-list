@@ -8,11 +8,11 @@ export default function AddingGuest() {
   const [attending, setAttending] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const baseUrl =
-    'http://14ac70e1-c69e-4cbb-b11f-b7677567d1c1-00-lxz0ae3q0o09.picard.replit.dev';
+    'https://14ac70e1-c69e-4cbb-b11f-b7677567d1c1-00-lxz0ae3q0o09.picard.replit.dev/guests';
 
   useEffect(() => {
     async function getGuests() {
-      const response = await fetch(`${baseUrl}/guests`);
+      const response = await fetch(`${baseUrl}/`);
       const allGuests = await response.json();
       setGuestList(allGuests);
       setIsLoading(false);
@@ -24,7 +24,7 @@ export default function AddingGuest() {
 
   // Creating a new guest and adding it to the API
   async function createGuest() {
-    const response = await fetch(`${baseUrl}/guests`, {
+    const response = await fetch(`${baseUrl}/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function AddingGuest() {
 
   // Sets attending to false/true for only one user
   async function toggleAttending(id) {
-    const response = await fetch(`${baseUrl}/guests/${id}`, {
+    const response = await fetch(`${baseUrl}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export default function AddingGuest() {
 
   // deletes only one user after click on remove
   async function cancelGuest(id) {
-    const response = await fetch(`${baseUrl}/guests/${id}`, {
+    const response = await fetch(`${baseUrl}/${id}`, {
       method: 'DELETE',
     });
     const deletedGuest = await response.json();

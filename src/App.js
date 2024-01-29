@@ -5,7 +5,7 @@ export default function AddingGuest() {
   const [guestList, setGuestList] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [attending, setAttending] = useState(false);
+  // const [attending, setAttending] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const baseUrl =
     'https://14ac70e1-c69e-4cbb-b11f-b7677567d1c1-00-lxz0ae3q0o09.picard.replit.dev/guests';
@@ -47,15 +47,17 @@ export default function AddingGuest() {
       body: JSON.stringify({ attending: !userAttending }),
     });
     const updatedGuest = await response.json();
-
-    setGuestList((prevList) =>
-      prevList.map((user) =>
-        user.id === updatedGuest.id
-          ? { ...user, attending: !user.attending }
-          : user,
-      ),
+    const newGuests = guestList.map((user) =>
+      user.id === updatedGuest.id ? updatedGuest : user,
     );
-    // setAttending(!updatedGuest.attending);
+    setGuestList(newGuests);
+
+    //  setGuestList((prevList) =>
+    //   prevList.map((user) =>
+    //     user.id === updatedGuest.id
+    //       ? { ...user, attending: !user.attending }
+    //       : user,
+    //   ),
   }
 
   // deletes only one user after click on remove
@@ -134,7 +136,7 @@ export default function AddingGuest() {
                     type="checkbox"
                     checked={user.attending}
                     aria-label={`${user.firstName} ${user.lastName} attending status`}
-                    onChange={() => toggleAttending(user.id)}
+                    onChange={() => toggleAttending(user.id, user.attending)}
                   />
                 </label>
                 <br />

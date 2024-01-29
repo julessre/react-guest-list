@@ -74,10 +74,10 @@ export default function AddingGuest() {
     return <div className="loading">Loading...</div>;
   } else {
     return (
-      <div className="container">
+      <div className="container" data-test-id="guest">
         <h1>React Guest List</h1>
         <form>
-          <div data-test-id="guest">
+          <div>
             <label>
               First name
               <br />
@@ -90,7 +90,7 @@ export default function AddingGuest() {
               />
             </label>
           </div>
-          <div data-test-id="guest">
+          <div>
             <label>
               Last name
               <br />

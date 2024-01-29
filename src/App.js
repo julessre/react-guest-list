@@ -38,13 +38,13 @@ export default function AddingGuest() {
   }
 
   // Sets attending to false/true for only one user
-  async function toggleAttending(id) {
+  async function toggleAttending(id, userAttending) {
     const response = await fetch(`${baseUrl}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ attending }),
+      body: JSON.stringify({ attending: !userAttending }),
     });
     const updatedGuest = await response.json();
 
@@ -55,7 +55,7 @@ export default function AddingGuest() {
           : user,
       ),
     );
-    setAttending(!updatedGuest.attending);
+    // setAttending(!updatedGuest.attending);
   }
 
   // deletes only one user after click on remove

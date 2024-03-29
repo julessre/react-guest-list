@@ -4,9 +4,7 @@ This react meme generator was created as part of the UpLeveled GmbH coding boot 
 
 	
 ## Core features
-- Create a new guest 
-    - by hitting the "ENTER" key in the "last name" input field.
-    - by using the "Create guest" button.
+- Create a new guest by hitting the "ENTER" key in the "last name" input field.
 - View all guests in a clean table format
 - Mark guests as attendees by checking the checkbox.
 - Undo marking guests as attendees by unchecking the checkbox.
